@@ -52,6 +52,7 @@ namespace SwaggerDemo.Controllers
         [Route("LogAppInSights")]
         public IActionResult LogAppInSights()
         {
+            //text message
             var iteration = 1;
             _logger.LogDebug($"Debug {iteration}");
             _logger.LogInformation($"Information {iteration}");
