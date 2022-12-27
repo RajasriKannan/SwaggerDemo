@@ -19,7 +19,8 @@ namespace SwaggerDemo.Models
         public DBContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _sqlconnectionString = _configuration.GetConnectionString("MyConn");
+            //_sqlconnectionString = _configuration.GetConnectionString("MyConn");
+            _sqlconnectionString = _configuration.GetConnectionString("SQLDBConn");
             _azureStorageconnectionString = _configuration.GetConnectionString("AzureStorageConn");
         }
 

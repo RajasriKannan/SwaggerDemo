@@ -7,7 +7,7 @@ using SwaggerDemo.Models;
 namespace SwaggerDemo.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/")]
     public class AzureController : ControllerBase
     {
         private DBContext _context;
@@ -22,17 +22,17 @@ namespace SwaggerDemo.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        [Route("GetFilesToUploadToBlob")]
-        public IActionResult GetFilesToUploadToBlob()
-        {
-            _context.UploadBlob();
-            return Ok("File Uploaded to Blob Storage");
-        }
+        //[HttpGet]
+        //[Route("GetFilesToUploadToBlob")]
+        //public IActionResult GetFilesToUploadToBlob()
+        //{
+        //    _context.UploadBlob();
+        //    return Ok("File Uploaded to Blob Storage");
+        //}
 
         [HttpGet]
-        [Route("DownloadFile")]
-        public async Task<IActionResult> DownloadFile(string fileName)
+        [Route("DownloadFileFromAzureBlob")]
+        public async Task<IActionResult> DownloadFileFromAzureBlob(string fileName)
         {
             CloudBlockBlob blockBlob;
             await using (MemoryStream memoryStream = new MemoryStream())
@@ -68,6 +68,21 @@ namespace SwaggerDemo.Controllers
                 _logger.LogError(ex, ex.Message);
             }
             return Ok("Data logged in App Insights");
+        }
+
+        [HttpGet]
+        [Route("ReadAppConfig")]
+        public string ReadAppConfig()
+        {
+            return _configuration.GetValue<string>("TestAppConfigKey");
+        }
+
+        [HttpGet]
+        [Route("GetSecretFromKeyVault")]
+        public string GetSecretFromKeyVault()
+        {
+            var value = _configuration["SampleSecret"];
+            return "Value for Secret [SampleSecret] is : " + value;
         }
     }
 }

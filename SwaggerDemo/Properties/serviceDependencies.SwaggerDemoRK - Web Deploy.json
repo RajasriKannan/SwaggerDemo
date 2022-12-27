@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/SwaggerDemoRK/apis/SwaggerDemo",
+      "type": "apis.azure"
+    },
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/swaggerdemodbserver/databases/SwaggerDemo_db",
+      "type": "mssql.azure",
+      "connectionId": "SQLDBConn",
+      "dynamicId": null
+    },
+    "storage1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/saaccount3",
+      "type": "storage.azure",
+      "connectionId": "ConnectionStrings:AzureStorageConn"
+    }
+  }
+}

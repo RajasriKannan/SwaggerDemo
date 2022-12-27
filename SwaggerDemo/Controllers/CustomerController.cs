@@ -5,7 +5,7 @@ using SwaggerDemo.Models;
 namespace SwaggerDemo.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/")]
     public class CustomerController : ControllerBase
     {
         private List<Customer> _customers;
@@ -24,14 +24,15 @@ namespace SwaggerDemo.Controllers
             };
         }
         [HttpGet]
-        public IEnumerable<Customer> GetCustomers()
+        [Route("GetCustomersFromAzureSQL")]
+        public IEnumerable<Customer> GetCustomersFromAzureSQL()
         {
             return _context.GetCustomers().ToList();
         }
 
         [HttpGet]
-        [Route("id")]
-        public Customer GetCustomerByID(int  id)
+        [Route("GetCustomerByIDFromInMemory/id")]
+        public Customer GetCustomerByIDFromInMemory(int  id)
         {
             return _customers.FirstOrDefault(c => c.Id == id);
         }

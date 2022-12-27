@@ -1,4 +1,8 @@
+using Azure.Identity;
+using Microsoft.Extensions.Azure;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddAzureKeyVault($"https://{builder.Configuration["KeyVault:Vault"]}.vault.azure.net/", builder.Configuration["KeyVault:ClientId"], builder.Configuration["KeyVault:ClientSecret"]);
 
 // Add services to the container.
 
@@ -7,15 +11,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationInsightsTelemetry();
+builder.Services.AddAzureClients(clientBuilder =>
+{
+    clientBuilder.AddBlobServiceClient(builder.Configuration["ConnectionStrings:AzureStorageConn:blob"], preferMsi: true);
+    clientBuilder.AddQueueServiceClient(builder.Configuration["ConnectionStrings:AzureStorageConn:queue"], preferMsi: true);
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
